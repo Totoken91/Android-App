@@ -4,12 +4,11 @@ on:
   push:
     branches: ["**"]
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: Checkout code
@@ -21,6 +20,14 @@ jobs:
           java-version: "17"
           distribution: "temurin"
 
+      - name: Install Android SDK components
+        run: |
+          echo "ANDROID_HOME: $ANDROID_HOME"
+          ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager \
+            "platforms;android-34" \
+            "build-tools;34.0.0" \
+            "platform-tools"
+
       - name: Install Gradle 8.4
         run: |
           curl -fsSL -o /tmp/gradle.zip https://services.gradle.org/distributions/gradle-8.4-bin.zip
@@ -31,7 +38,7 @@ jobs:
         run: echo "sdk.dir=$ANDROID_HOME" > local.properties
 
       - name: Build Debug APK
-        run: gradle assembleDebug
+        run: gradle assembleDebug --stacktrace
 
       - name: Rename APK with branch and commit info
         run: |
