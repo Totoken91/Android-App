@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ma Todo</string>
+    <string name="hint_new_task">Nouvelle tâche…</string>
+    <string name="empty_state">Aucune tâche pour l\'instant.\nAjoute-en une !</string>
+    <string name="delete_task">Supprimer</string>
+    <string name="error_empty_task">La tâche ne peut pas être vide</string>
+</resources>
